@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:include src="/menus/navmenu.xhtml"/>
+            <br/>
+            <br/>
+            <p:commandButton value="Modal" type="button" onclick="PF('mdl').show();"/>
+        </h:form>
+
+        <p:growl id="msj" showDetail="true"/>
+        <h:form>
+            <p:dialog header="Modal Dialog" widgetVar="mdl" modal="true" height="700" width="1200" draggable="false">
+                <p:commandButton value="Modal" type="button" onclick="PF('mdl2').show();" />
+
+
+
+
+            </p:dialog>   
+        </h:form>
+        <p:dialog header="Modal Dialog" widgetVar="mdl2" modal="true" height="500" width="800">
+
+        </p:dialog>
+
+
+        <p:dataTable value="#{cSTPlatillo.lista}" var="sp" id="table" >
+            <p:column headerText="id">
+                <p:outputLabel value="#{sp.tipoPlatillo}"/>
+            </p:column>
+            <p:column headerText="cargo">
+                <p:outputLabel value="#{sp.id_subCategoria}"/>
+            </p:column>
+            <p:column headerText="Tiempo">
+                <p:outputLabel value=""/>
+            </p:column>
+
+        </p:dataTable>
+    </h:body>
+</html>
+

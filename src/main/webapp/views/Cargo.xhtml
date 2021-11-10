@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ui:include src="/menus/navmenu.xhtml"/>
+        </h:form>
+        <p:growl id="msj" showDetail="true"/>
+        <p:panel>
+            <h2>otakos!!!!!!!!, unidos!!!!!!!!!!!!!!!!!   >:3</h2>
+        </p:panel>
+        <!-- modal para insertar e editar-->
+        <h:form id="mel">
+            <p:commandButton value = "Modal" type = "button" onclick = "PF('dlg').show();" />
+
+            <p:dialog header="Nuevo producto" widgetVar="dlg" modal="true" height="250" width="400">
+                <p:ajax event="close" listener="#{cCargo.clear()}" update="mel"/>
+
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="nombre"/>
+                    <p:keyboard value="#{cCargo.cargo.cargo}" required="true"/>
+                    <p:commandButton value='Guardar' action="#{cCargo.save()}" onclick="closeDialog()"
+                                     rendered='#{cCargo.cargo.id_cargo == 0}' oncomplete="PF('modal').hiden();" />
+                    <p:commandButton value="Actualizar" action="#{cCargo.update()}" onclick="closeDialog()"
+                                     rendered='#{cCargo.cargo.id_cargo != 0}' oncomplete="Pf('modal').hiden();" />
+                    <p:commandButton value="cancelar" onclick="closeDialog()" action="#{cCargo.clear()}"/>
+                  
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+        <!-- dialogo de confiramacion--> 
+        <h:form>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="yes" type="button"  styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+            </p:confirmDialog>      
+        </h:form>
+        <h:form>
+            <p:dataTable value="#{cCargo.lista}" var="c" id="table">
+                <p:column headerText="id">
+                    <p:outputLabel value="#{c.id_cargo}"/>
+                </p:column>
+                <p:column headerText="cargo">
+                    <p:outputLabel value="#{c.cargo}"/>
+                </p:column>
+                <p:column headerText="eliminar">
+                    <p:commandButton value="Delete" action="#{cCargo.delete(c)}" update=":msj table">
+                        <p:confirm header="Confirmation" message="desea eliminar el registro?" icon="pi pi-exclamation-triangle" />
+                    </p:commandButton>
+                </p:column>
+                <p:column headerText="actualizar">
+                    <p:commandButton value="Modificar" action="#{cCargo.find(c)}" oncomplete="PF('dlg').show();"  update="mel"/>
+
+
+                </p:column>
+            </p:dataTable>
+
+        </h:form>
+    </h:body>
+</html>
+
